@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+<tx:annotation-driven transaction-manager="txManager"/>
+<context:component-scan base-package="kh.spring"></context:component-scan>
+<aop:aspectj-autoproxy proxy-target-class="true"></aop:aspectj-autoproxy>
+<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+<!-- dbcp -->
+<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
+<property name="url"
+			value="jdbc:oracle:thin:@localhost:1521:xe" />
+		<property name="username" value="kh"></property>
+		<property name="password" value="kh"></property>
+		<!-- <property name="defaultAutoCommit" value="false" /> -->
+	</bean>
+	
+	<!--img  -->
+	<mvc:annotation-driven />
+	<mvc:resources location="/resources/" mapping="/resources/**"/>	
+<!-- jdbc template -->
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+	<property name="dataSource" ref="dataSource"/>
+	</bean>
+	
+	
+	
+	<!--multipart  -->
+	
+	
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+<property name="maxUploadSize" value="10000000"></property>
+</bean>
+<!--transaction  -->
+ <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	<property name="dataSource" ref="dataSource"></property>
+
+	</bean>
+ <!-- Mybatis작업  -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+	<property name="dataSource" ref="dataSource"/> <!--dbpc를 setter로 받는다   -->
+	<property name="mapperLocations" value="classpath:/mybatis/*-mapper.xml"/><!-- 쿼리문을 탑재한 위치를 받아준다 , 파일안에 쿼리가 있고 자바가 그 쿼리를 읽으면서 실행된다  -->
+	</bean>
+	<bean id="seqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+	<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"/>
+	
+	</bean>
+</beans>
