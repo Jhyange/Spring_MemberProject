@@ -12,10 +12,9 @@ private String writer;
 private String context;
 private Timestamp now;
 private int viewcount;
-private String imgpath;
-private MultipartFile image;
-public BoardDTO(int seq, String title, String writer, String context, Timestamp now, int viewcount, String imgpath,
-		MultipartFile image) {
+/*private String imgpath;
+private MultipartFile image;*/
+public BoardDTO(int seq, String title, String writer, String context, Timestamp now, int viewcount) {
 	super();
 	this.seq = seq;
 	this.title = title;
@@ -23,21 +22,9 @@ public BoardDTO(int seq, String title, String writer, String context, Timestamp 
 	this.context = context;
 	this.now = now;
 	this.viewcount = viewcount;
-	this.imgpath = imgpath;
-	this.image = image;
 }
 public BoardDTO() {
 	super();
-}
-public BoardDTO(int seq, String title, String writer, String context, Timestamp now, int viewcount, String imgpath) {
-	super();
-	this.seq = seq;
-	this.title = title;
-	this.writer = writer;
-	this.context = context;
-	this.now = now;
-	this.viewcount = viewcount;
-	this.imgpath = imgpath;
 }
 public int getSeq() {
 	return seq;
@@ -75,17 +62,6 @@ public int getViewcount() {
 public void setViewcount(int viewcount) {
 	this.viewcount = viewcount;
 }
-public String getImgpath() {
-	return imgpath;
-}
-public void setImgpath(String imgpath) {
-	this.imgpath = imgpath;
-}
-public MultipartFile getImage() {
-	return image;
-}
-public void setImage(MultipartFile image) {
-	this.image = image;
-}
+
 
 }

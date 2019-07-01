@@ -3,10 +3,15 @@
 <mapper namespace="BoardDAO">
 
 
-<select id="selectlist" resultType="kh.spring.dto.BoardDTO"> select * from board</select>
+<select id="selectlist" resultType="kh.spring.dto.BoardDTO"> select * from board order by now desc</select>
 <insert id="insert">
-insert into board values(b_seq.nextval,#{title},#{writer},#{context},default,0,#{imgpath})
+insert into board values(b_seq.nextval,#{title},#{writer},#{context},default,0)
 </insert>
-<select id="selectcontext" resultType="kh.spring.dto.BoardDTO"> select * from board where seq=#{seq}</select>
+<select id="fileseq" resultType="Integer">select seq from (select * from board order by now desc )where rownum=1</select>
+<select id="selectcontext" resultType="kh.spring.dto.BoardDTO"> select * from board where seq=#{seq}  </select>
 <delete id="deletecontext">delete from board where seq=#{seq}</delete>
+<select id="bordcount">select count(*) from Board</select>
+<update id="updateview">update board set viewcount=viewcount+1 where seq=#{seq}</update>
+<insert id="insertfile">
+insert into imgfile values(#{seq},#{imgpath})</insert>
 </mapper>

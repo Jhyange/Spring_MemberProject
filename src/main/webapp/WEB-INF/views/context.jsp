@@ -105,8 +105,7 @@ div {
 		<form action="WriteProc" id="form">
 			<div id="wrapper">
 				<div id="title">
-			
-			
+					
 				${list.title}
 				
 				</div>
@@ -130,9 +129,7 @@ div {
 			location.href = "board";
 		}
 		
-		document.getElementById("del").onclick = function() {
-			location.href = "delboard?seq=${list.seq}&&imgpath=${list.imgpath}";
-		}
+	
 	</script>
 </body>
 </html>

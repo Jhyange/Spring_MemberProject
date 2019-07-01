@@ -44,6 +44,11 @@ div {
 	padding: 0px;
 }
 
+#seq {
+	border: none;
+	width:20px;
+	height:12px;
+}
 </style>
 </head>
 <body>
@@ -51,7 +56,7 @@ div {
 		<header>
 			<div class="row" id="top">
 				<div class=" logo col-lg-12 col-md-12 col-sm-12">
-					<b>B O A R D</b>
+					<b>B O A R D</b><input type="button" id="chat" value="msg">
 				</div>
 			</div>
 		</header>
@@ -81,20 +86,16 @@ div {
 						<div class="row" id="listbox">
 							<div
 								class="  col-lg-1 col-md-1 col-sm-1 col-1 order-lg-1 order-md-2 order-2">
-								<input type="hidden" value="${dto.seq}" name="seq" id="seq"
+								<input type="text" value="${dto.seq}" name="seq" id="seq"
 									readonly>
 							</div>
 							<div
 								class=" col-lg-5 col-md-12 col-sm-12 col-12 order-lg-2 order-md-1 order-1 writetitle"
 								name="title">
-								<script>
-									console.log("${dto.imgpath}")
-								</script>
 
-
-								<c:if test="${dto.imgpath !='null'}">
+								<%-- <c:if test="${dto.imgpath !='null'}">
 									<img src="/resources/${dto.imgpath}" width=50px height=50px>
-								</c:if>
+								</c:if> --%>
 								${dto.title}
 
 
@@ -117,21 +118,18 @@ div {
 			</div>
 		</div>
 		</main>
-		
+
 		<footer>
 			<div class="row">
 				<div class=" logo col-lg-12 col-md-12 col-sm-12" id="foot">
 					<div id="navi">${navi}</div>
-					<input type="button" value="글쓰기" id="write"><input
-						type="button" value="메인" id="index">
-						<input type="button" id="chat" >
+					<input type="button" value="글쓰기" id="write">
+
 					<script>
 						document.getElementById("write").onclick = function() {
 							location.href = "Writeboard";
 						}
-						document.getElementById("index").onclick = function() {
-							location.href = "index";
-						}
+						
 						$(".writetitle").on("click", function() {
 							$(this).parent().parent().submit();
 						})
@@ -144,23 +142,8 @@ div {
 			</div>
 		</footer>
 	</div>
-	
-	<script>
-/* var socket=new WebSocket("ws://192.168.60.8/WebSocket");
-socket.onmessage=function(evt){
-	window.open("message?msg="+evt.data, "",
-	"width=500px,height=300px");
-	
-	
-}
 
-$("#send").on("click",function(){
-	
-	var msg=$("#input").val();
-	$("#input").val("");
-	socket.send(msg);
-}) */
-</script>
-	
+
+
 </body>
 </html>

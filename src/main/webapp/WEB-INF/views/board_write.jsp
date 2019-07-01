@@ -17,11 +17,12 @@ div {
 	box-sizing: border-box;
 	text-align: center;
 	overflow: hidden;
+	border: 1px solid black;
 }
 
 #wrapper {
 	width: 800px;
-	height: 800px;
+	height: 1000px;
 	border: 1px solid gray;
 	margin: 20px;
 }
@@ -30,7 +31,7 @@ div {
 	width: 100%;
 	height: 6%;
 	float: left;
-	margin-bottom: 5px;
+	margin: 0px;
 }
 
 #write, #list {
@@ -48,12 +49,12 @@ div {
 
 #btn {
 	width: 100%;
-	height: 7%;
+	height: 17%;
 	text-align: right;
 }
 
 #contents {
-	text-align: right;
+	box-sizing: border-box;
 }
 
 #titletext {
@@ -71,58 +72,60 @@ textarea {
 <script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
 </head>
 <body>
-	<center>
-		<form action="WriteProc" id="form" enctype="multipart/form-data"
-			method="post">
-			<div id="wrapper">
-				<div id="title">
-					<input type="text" placeholder="제목을 입력하시오" id="titletext"
-						name="title"> 
-				
-				</div>
-				<div id="contents">
-				<img id="newImg" src="#" alt="프로필 이미지 미설정"
-						width="50px" height="60px" />
-					<textarea placeholder="내용을 입력하시오" name="context">
-					
-					
-					</textarea>
-				</div>
-			
-					<input type=file name="image" id="imageInp">
-			
-				<div id="btn">
-					<input type="button" value="작성" id="write"> <input
-						type="button" value="목록" id="list">
-				</div>
+
+	<form action="WriteProc" id="form" enctype="multipart/form-data"
+		method="post">
+		<div id="wrapper">
+			<div id="title">
+				<input type="text" placeholder="제목을 입력하시오" id="titletext"
+					name="title">
+
 			</div>
-	</center>
+			<div id="contents"contenteditable=true >
+			
+
+			</div>
+
+			<div id="btn">
+			<input type="hidden" value="" id="hidden" name="context">
+				<input type="button" value="작성" id="write"> <input type=file
+					name="image" id="imageInp">
+			</div>
 	</form>
 	<script>
 		document.getElementById("write").onclick = function() {
+			$("#hidden").attr("value",$("#contents").html());
 			document.getElementById("form").submit();
-		}
-		document.getElementById("list").onclick = function() {
-			location.href = "SelboardProc.board?currentPage=1";
 		}
 	</script>
 
 	<script>
-	function readURL(input) {
-		if (input.files && input.files[0]) { //ajax를 사용해서 해당 controller에서 보내서 그 값을 reposne로 담아와서 
-			                     //body부분은 divtextcontents로 바꿔서 그곳에 appen를 사요하여 이미지 태그 자체를 보낸다 
-			                     //aop이용해서 board못들어오도록
-			var reader = new FileReader();
-			reader.onload = function(e) {
-				$('#newImg').attr('src', e.target.result);
-			}
-			reader.readAsDataURL(input.files[0]);
-		}
-	}
-
-	$("#imageInp").change(function() {
-		readURL(this);
-	});
+		$("#imageInp")
+				.on(
+						"change",
+						function() {
+							var form = new FormData(document
+									.getElementById("form"));
+							$
+									.ajax({
+										url : "/asJson",
+										type : 'post',
+										data : form,
+										contentType : false,
+										processData : false,
+										 type:"post",
+										success : function(response) {
+											/* var result=JSON.parse(response); */
+											console.log(response.filename);
+											$("#contents")		.append(
+															"<img id='newImg' src=/resources"+response.filename+" alt='프로필 이미지 미설정' width='150px' height='160px'  >");
+										
+										},
+										error : function(er) {
+											alert(er);
+										}
+									});
+						});
 	</script>
 </body>
 </html>

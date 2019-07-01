@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-       <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> 
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -9,40 +9,60 @@
 <script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
 </head>
 <body>
- 
- <form action="updateform" method="post" id="form">
- <img src="/resources/${result.imagepath}" width="50px" height="50px" > <br>
- 
-	<input type=hidden value="${result.id}" name=id >
-	
-★ 비밀번호
-				
-				<input type="password" id="pw" name="pw"
-					placeholder="비밀번호8글자이상 입력하시오">
+
+	<form action="updateform" method="post" id="form">
+		<img src="/resources/${result.imagepath}" width="150px" height="150px">
+		<br> <input type=hidden value="${result.id}" name=id> 
+		<table border="1">
+		<tr>
+		<td>
+		★
+		비밀번호</td><td> <input type="password" id="pw" name="pw"
+			placeholder="비밀번호8글자이상 입력하시오"> </td>
+			</tr>
 			
+			<tr>
+			<td>
+			★비밀번호 확인
+</td><td>
+		<div id="wrapper">
+			<div id="checkpwbox">
+				<input type="password" id="checkpw" required>
+			</div>
+			<div id="result" flag="false"></div>
+		</div>
+</td>
+</tr>
+<tr>
+<td>
+		이름</td><td> <input type=text value="${result.name}" name=name id="name"><br>
+	</td>
+	</tr>
+	<tr><td>
+		전화번호 </td><td><input type=text value="${result.phone}" name=phone id="phone">
 		
-				★비밀번호 확인
-				
-			<div id="wrapper">
-						<div id="checkpwbox">
-							<input type="password" id="checkpw" required>
-						</div>
-						<div id="result" flag="false"></div>
-					</div>
-			
+		- <input type=text value="${result.phone1}" name=phone1 id=phone1>
+		- <input type=text value=" ${result.phone2}" name=phone2 id="phone2">
+		</td>
+		</tr>
+		<tr>
+		<td>이메일</td><td><input type=text value="  ${result.email}" name=email id="email"><br>
+		</td>
+		</tr>
 		
-   이름 <input type=text value= "${result.name}"name=name id="name"><br>
-  전화번호 <input type=text value= "${result.phone}"name=phone id="phone"><br>
-   -  <input type=text value= "${result.phone1}"name=phone1 id=phone1><br>
-   -  <input type=text value= " ${result.phone2}" name=phone2 id="phone2"><br>
-  이메일 :<input type=text value= "  ${result.email}"name=email id="email"><br>
-   주소 :<input type=text value= "  ${result.post}"name=post id="postcode"><br><input type="button"
-						value="찾기" id="search"><br>
-     <input type=text value= " ${result.address1}"name=address1 id="address1"><br>
-     <input type=text value= "  ${result.address2}"name=address2 id=""><br>
-   <input type="submit" id="updateinfo" value="수정">
-  </form>   
-  <!-- 비밀번호 일치 불일치  -->
+		<tr><td>주소</td><td><input type=text value="  ${result.post}" name=post id="postcode">
+		
+		<input type="button" value="찾기" id="search">
+		 <input
+			type=text value=" ${result.address1}" name=address1 id="address1">
+		
+		
+		<input type=text value="  ${result.address2}" name=address2 id=""></td>
+		</tr>
+		</table>
+		<input type="submit" id="updateinfo" value="수정">
+	</form>
+	<!-- 비밀번호 일치 불일치  -->
 	<script>
 		document.getElementById("checkpw").oninput = function() {
 			var pw1 = document.getElementById("pw").value;
@@ -61,13 +81,13 @@
 			}
 		}
 	</script>
-  
-  <!--회원가입  -->
-	
-	
-  
-  
-<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+
+	<!--회원가입  -->
+
+
+
+
+	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 	<script>
 		document.getElementById("search").onclick = searchAddress;
 

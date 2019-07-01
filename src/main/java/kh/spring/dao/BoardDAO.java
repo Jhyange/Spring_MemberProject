@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import kh.spring.dto.BoardDTO;
+import kh.spring.dto.FileDTO;
 @Component
 public class BoardDAO {
 	
@@ -23,6 +24,16 @@ public class BoardDAO {
 		return sst.insert("BoardDAO.insert",dto);
 		
 	}
+	public int selectseq()
+	{
+		return sst.selectOne("BoardDAO.fileseq");
+	}
+	public int insertimg(FileDTO dto)
+	{   
+		
+		return sst.insert("BoardDAO.insertfile",dto);
+		
+	}
 	
 	public BoardDTO selectcontext(String seq)
 	{   
@@ -35,4 +46,19 @@ public class BoardDAO {
 		return sst.delete("BoardDAO.deletecontext",seq);
 		
 	}
+	public int updateviewcount(String seq)
+	{   
+		return sst.delete("BoardDAO.updateview",seq);
+		
+	}
+	
+	@Autowired
+	private Configeration cgf;
+	
+	public int boardselcount(){
+		return sst.selectOne("BoardDAO.bordcount");
+		
+	}
+	
+	
 }
